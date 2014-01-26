@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import org.ops4j.pax.exam.Configuration;
 import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.exam.junit.PaxExam;
+import org.ops4j.pax.exam.karaf.options.LogLevelOption;
 import org.ops4j.pax.exam.options.MavenArtifactUrlReference;
 import org.ops4j.pax.exam.options.MavenUrlReference;
 import paxexam.bundle.persistence.MainService;
@@ -33,29 +34,30 @@ public class MainTest
 				.type("tar.gz");
 		MavenUrlReference karafStandardRepo = maven()
 				.groupId("org.apache.karaf.features")
-				.artifactId("standard")
+				.artifactId("org.apache.karaf.features.core")
+				.version("2.3.0")
 				.classifier("features")
-				.type("xml")
-				.versionAsInProject();
+				.type("xml");
 
 		return new Option[]
 		{
-			// KarafDistributionOption.debugConfiguration("5005", true),
 			karafDistributionConfiguration()
 				.frameworkUrl(karafUrl)
 				.unpackDirectory(new File("target/exam"))
-				.useDeployFolder(false),
+				.useDeployFolder(false)
+				.karafVersion("2.3.0"),
 			keepRuntimeFolder(),
 			features(karafStandardRepo, "scr"),
 			mavenBundle()
 				.groupId("pax-exam")
 				.artifactId("bundle")
-				.versionAsInProject().start()
+				.versionAsInProject().start(),
+			logLevel(LogLevelOption.LogLevel.ERROR)
 		};
 	}
 
 	@Test
-	public void testAdd()
+	public void testDatabaseAccess()
 	{
 		MainService service = new MainServiceImpl();
 		service.warmUp();
