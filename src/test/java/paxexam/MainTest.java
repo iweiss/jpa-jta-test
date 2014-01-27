@@ -73,7 +73,7 @@ public class MainTest
 			bundle("mvn:org.hibernate/hibernate-core/4.2.7.Final"),
 			bundle("mvn:org.hibernate/hibernate-entitymanager/4.2.7.Final"),
 			bundle("mvn:org.hibernate/hibernate-osgi/4.2.7.Final"),
-			logLevel(LogLevelOption.LogLevel.DEBUG),
+			logLevel(LogLevelOption.LogLevel.WARN),
 			mavenBundle()
 				.groupId("pax-exam")
 				.artifactId("bundle")
