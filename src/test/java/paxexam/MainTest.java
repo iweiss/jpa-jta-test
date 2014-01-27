@@ -18,7 +18,7 @@ import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
 import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.*;
 
 /**
- * Created by lasombra on 24/01/2014.
+ * Created by Ingo Weiss on 24/01/2014.
  */
 
 @RunWith(PaxExam.class)
@@ -33,8 +33,8 @@ public class MainTest
 				.version("2.3.0")
 				.type("tar.gz");
 		MavenUrlReference karafStandardRepo = maven()
-				.groupId("org.apache.karaf.features")
-				.artifactId("org.apache.karaf.features.core")
+				.groupId("org.apache.karaf.assemblies.features")
+				.artifactId("enterprise")
 				.version("2.3.0")
 				.classifier("features")
 				.type("xml");
@@ -47,11 +47,11 @@ public class MainTest
 				.useDeployFolder(false)
 				.karafVersion("2.3.0"),
 			keepRuntimeFolder(),
-			features(karafStandardRepo, "scr"),
+			features(karafStandardRepo, "scr", "transaction", "jndi", "jpa"),
 			mavenBundle()
 				.groupId("pax-exam")
 				.artifactId("bundle")
-				.versionAsInProject().start(),
+				.version("1.0-SNAPSHOT").start(),
 			logLevel(LogLevelOption.LogLevel.ERROR)
 		};
 	}
